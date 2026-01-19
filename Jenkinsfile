@@ -7,13 +7,14 @@ pipeline {
                 echo 'Hello World'
                 sh 'mvn clean package'
             }
-        }
+        
        post { 
         success { 
             echo 'Archiving the artifact'
             archiveArtifacts artifacts: '**/*.war', followSymlinks: false
         }
     }
+}
         stage('Unittest') {
             steps {
                 echo 'running unittest'

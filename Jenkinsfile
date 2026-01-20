@@ -17,8 +17,14 @@ pipeline {
 }
         stage('Build docker image') {
             steps {
-                echo 'running unittest'
+                echo 'building docker image'
                 sh 'docker build -t myregistry.local/myapp:"$BUILD_NUMBER" .'
+            }
+        }
+        stage('trivy scan docker image') {
+            steps {
+                echo 'scanning image'
+                sh 'trivy image myregistry.local/myapp:"$BUILD_NUMBER"'
             }
         }
     }

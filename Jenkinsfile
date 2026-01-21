@@ -43,6 +43,16 @@ pipeline {
                   '''
             }
         }
+        stage('deploy to prod env') {
+            steps {
+                echo 'prod deployment'
+                sh '''
+                docker stop myapp-prod || true
+                docker rm  myapp-prod  || true
+                docker run -d --name myapp-production -p 9091:8080  myregistry.local/myapp:"$BUILD_NUMBER"
+                  '''
+            }
+        }
     }
 }
 

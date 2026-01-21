@@ -45,6 +45,9 @@ pipeline {
         }
         stage('deploy to prod env') {
             steps {
+                 timeout(time:1, unit:'MINUTES'){
+                 input message: 'Approve Production deployment?'
+                 }
                 echo 'prod deployment'
                 sh '''
                 docker stop myapp-prod || true
